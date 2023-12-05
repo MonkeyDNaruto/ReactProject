@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import {Container, Input} from "semantic-ui-react"
+import Add from "./components/Add";
+import View from './components/View';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  state = {
+    users : [
+      {id: 1, name: "Nischal Shrestha", username:"nishalstha"},
+      {id: 2, name: "Nisuka Shrestha", username:"nisukastha"},
+      {id: 3, name: "Namrata Shrestha", username:"namratastha"}
+    ]
+  }
+  handleSearchChange = (event) => {
+    console.log(event.target.value);
+  }
+  onFormSubmit = (user) => {
+    const {users} = this.state;
+    this.setState({
+      users:[...users, user]
+    })
+  }
+  render() {
+    const {users} = this.state;
+    return (
+      <Container>
+        <Add onSubmit={this.onFormSubmit}></Add>
+        <Input icon="search" placeholder="search" onChange={this.handleSearchChange} />
+        <View data={users} ></View>
+      </Container>
+    )
+  }
 }
-
-export default App;
